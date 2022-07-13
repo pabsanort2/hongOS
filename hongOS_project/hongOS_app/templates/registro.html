@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HongOS</title>
+</head>
+
+<body>
+
+    <div class="content-section">
+
+        <form enctype='multipart/form-data' method='POST'> 
+
+            {% csrf_token %}
+            <legend>Crea tu cuenta</legend>
+            {{form1.username.label}}
+            {{form1.username}}
+            
+            <br>
+
+            {{form2.email.label}}
+            {{form2.email}}
+
+            <br>
+
+            {{form1.password1.label}}
+            {{form1.password1}}
+
+            <br>
+
+            {{form1.password2.label}}
+            {{form1.password2}}
+
+            <!-- Tambien se puede hacer asi
+            {% for field in form %}
+                {field.label}
+                {field}
+            {%endfor%}-->
+            <div class="submit-button"><button type="submit">Aceptar</button></div>
+        </form>
+
+        {{form1.errors}}
+        {{form2.errors}}
+
+        <div>
+            <small>¿Ya tienes una cuenta? <a href="/login/">Inicia sesión aquí!</a></small>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
