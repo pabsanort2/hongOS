@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HongOS</title>
+</head>
+<body>
+    
+    <section class="container">
+        <form method="POST" class="form-signin">
+            {% csrf_token %}
+            <label for="id_username" class="sr-only" style="margin-left: 25%">Usuario</label>
+            <input id="id_username" class="form-control" placeholder="Usuario" name="username" style="width: 50%; margin-left: 25%" required autofocus>
+            <br>
+            <label for="id_password" class="sr-only" style="margin-left: 25%">Contraseña</label>
+            <input type="password" id="id_password" class="form-control" placeholder="Contraseña" style="width: 50%; margin-left: 25%" name="password" required>
+            <div class="checkbox mb-3"></div>
+
+            {%for message in messages%}
+                <div id="messages_id">{{message}}</div>
+            {%endfor%}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-left: 50%">Iniciar sesión</button>
+
+
+</body>
+</html>
