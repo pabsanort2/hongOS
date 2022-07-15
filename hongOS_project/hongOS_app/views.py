@@ -65,6 +65,7 @@ def loginView(request):
 def home(request):
     return render(request, 'home.html',{})
 
+@login_required
 def logoutView(request):
     logout(request)
     messages.success(request,'La sesión se cerró correctamente')
