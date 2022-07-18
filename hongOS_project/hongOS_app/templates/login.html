@@ -1,28 +1,74 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HongOS</title>
 </head>
+
 <body>
-    
-    <section class="container">
-        <form method="POST" class="form-signin">
-            {% csrf_token %}
-            <label for="id_username" class="sr-only" style="margin-left: 25%">Usuario</label>
-            <input id="id_username" class="form-control" placeholder="Usuario" name="username" style="width: 50%; margin-left: 25%" required autofocus>
-            <br>
-            <label for="id_password" class="sr-only" style="margin-left: 25%">Contraseña</label>
-            <input type="password" id="id_password" class="form-control" placeholder="Contraseña" style="width: 50%; margin-left: 25%" name="password" required>
-            <div class="checkbox mb-3"></div>
 
-            {%for message in messages%}
-                <div id="messages_id">{{message}}</div>
-            {%endfor%}
+    <style>
+        div {
+            width: 20%;
+            text-align: center;
+            margin: 0 auto;
+        }
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-left: 50%">Iniciar sesión</button>
+        #principal_div {
+            margin-top: 10%;
+        }
 
+        #messages{
+            margin-top: 1%;
+            width: 30%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+
+    {%for message in messages%}
+    <div id="messages" class="alert alert-warning" role="alert">
+        <p>{{message}}</p>
+    </div>
+    {%endfor%}
+
+    <div id=principal_div class="form-outline mb-4"></div>
+    <form method="POST" class="form-signin">
+        {% csrf_token %}
+        <div class="text-center">
+            <p>Iniciar sesión</p>
+        </div>
+
+        <!-- User input -->
+        <div class="form-outline mb-4">
+            <input type="text" id="form2Example1" class="form-control" placeholder="Usuario" name="username" />
+            <label class="form-label" for="label_username"></label>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" id="id_password" class="form-control" placeholder="Contraseña" name="password" />
+            <label class="password-label" for="password-label"></label>
+        </div>
+
+        <!-- 2 column grid layout for inline styling -->
+
+        <!-- Submit button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block mb-4">Iniciar sesión</button>
+        </div>
+    </form>
+    <!-- Register buttons -->
+    <div class="text-center">
+        <p>¿Aún no te has registrado? <a href="/registro/">Regístrate!</a></p>
+    </div>
 
 </body>
+
 </html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">

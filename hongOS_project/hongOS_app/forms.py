@@ -28,3 +28,8 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1','password2')
+        error_messages = {
+            'username': {
+                'unique':("Ya existe un usuario con este nombre de usuario"),
+            },
+        }

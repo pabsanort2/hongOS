@@ -1,18 +1,47 @@
 {% extends "base.html" %}
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{%block title%}HongOS{%endblock%}</title>
 </head>
+
 <body>
+
     {% block content %}
-    <p>Hola!</p>
+
+    <style>
+        div {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #messages {
+            width: 40%;
+            margin-top: 1%;
+        }
+
+        .closebtn {
+            float: right;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+
+
     {%for message in messages%}
-        <div id="message">{{message}}</div>
+    <div id='messages' class="alert alert-warning" role="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> {{message}}
+    </div>
     {%endfor%}
     {% endblock %}
 </body>
+
 </html>
