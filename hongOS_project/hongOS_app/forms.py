@@ -30,6 +30,6 @@ class UserForm(UserCreationForm):
         fields = ('username', 'password1','password2')
         error_messages = {
             'username': {
-                'required':("Este campo es obligatorio"),
+                'unique':("Ya existe un usuario con este nombre de usuario"),
             },
         }

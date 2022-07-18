@@ -21,7 +21,8 @@
         }
 
         #messages{
-            margin-top: 5%;
+            margin-top: 1%;
+            width: 30%;
         }
 
         * {
@@ -30,7 +31,7 @@
     </style>
 
     {%for message in messages%}
-    <div id='messages' class="text-center">
+    <div id="messages" class="alert alert-warning" role="alert">
         <p>{{message}}</p>
     </div>
     {%endfor%}
