@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from hongOS_app.views import clasificar, loginView, registro, home, logoutView
 from django.contrib.auth.views import LoginView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,4 @@ urlpatterns = [
     path('home/', home),
     path('', home),
     path('logout/',logoutView),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
