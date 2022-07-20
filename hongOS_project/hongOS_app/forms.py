@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 
-class ImagenModelForm(forms.ModelForm):
+class ImagenForm(forms.ModelForm):
     class Meta:
         model = Imagen
         fields = ('file_name',)
