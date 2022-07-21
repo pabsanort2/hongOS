@@ -33,10 +33,6 @@
         * {
             box-sizing: border-box;
         }
-
-        #texto_hongos {
-            text-align: left;
-        }
     </style>
 
 
@@ -50,11 +46,11 @@
         <div class="row text-center mb-5">
             {%if hongos%}
             <div class="col-lg-7 mx-auto">
-                <h1 class="">Tus últimos hongos registrados</h1>
+                <h1 class="">Buscando: {{busqueda}}</h1>
             </div>
             {%else%}
             <div>
-                <h1>Aún no has registrado ningún hongo</h1>
+                <h1>No hay ningún hongo con este criterio de búsqueda :(</h1>
             </div>
             {%endif%}
         </div>
