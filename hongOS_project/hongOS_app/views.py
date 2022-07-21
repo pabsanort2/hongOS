@@ -36,7 +36,7 @@ def clasificar(request):
                            imagen=form.cleaned_data.get('file_name'))
             hongo.save()
             os.remove(imagePath)
-            return render(request, 'clasificar.html', {'imagePath': imagePath, 'predictedCategory': pred, 'method': request.method, 'prob': prob})
+            return render(request, 'clasificar.html', {'imagePath': imagePath, 'method': request.method, 'hongo': hongo})
         else:
             messages.info(
                 request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
@@ -68,7 +68,7 @@ def busqueda(request):
         hongos = Hongos.objects.filter(nombre__contains=busqueda)
 
         if len(busqueda) != 0:
-            return render(request, 'busqueda.html', {'busqueda': busqueda, 'hongos':hongos})
+            return render(request, 'busqueda.html', {'busqueda': busqueda, 'hongos': hongos})
         else:
             return redirect('/home/')
     else:
