@@ -61,10 +61,25 @@ def registro(request):
     return render(request, 'registro.html', {'form1': form1, 'form2': form2})
 
 
+@login_required
+def busqueda(request):
+    if request.method == "POST":
+        busqueda = request.POST.get('busqueda')
+        hongos = Hongos.objects.filter(nombre__contains=busqueda)
+
+        if len(busqueda) != 0:
+            return render(request, 'busqueda.html', {'busqueda': busqueda, 'hongos':hongos})
+        else:
+            return redirect('/home/')
+    else:
+        return render(request, 'busqueda.html', {})
+
+
 def loginView(request):
 
     if request.method == 'POST':
-        userID = User.objects.filter(username=request.POST.get('username'))[0].id
+        userID = User.objects.filter(
+            username=request.POST.get('username'))[0].id
         if HongOSUser.objects.filter(user=userID).count() != 0:
 
             username = request.POST.get('username')

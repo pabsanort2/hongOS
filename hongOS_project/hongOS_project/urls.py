@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from hongOS_app.views import clasificar, loginView, registro, home, logoutView
+from hongOS_app.views import clasificar, loginView, registro, home, logoutView, busqueda
 from django.contrib.auth.views import LoginView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -28,4 +28,5 @@ urlpatterns = [
     path('home/', home),
     path('', home),
     path('logout/',logoutView),
+    path('busqueda', busqueda, name='busqueda'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
