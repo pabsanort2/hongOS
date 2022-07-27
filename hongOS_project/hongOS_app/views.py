@@ -77,29 +77,35 @@ def busqueda(request):
 
 def loginView(request):
 
-    if request.method == 'POST':
-        userID = User.objects.filter(
-            username=request.POST.get('username'))[0].id
-        if HongOSUser.objects.filter(user=userID).count() != 0:
+        if request.method == 'POST':
+            if User.objects.filter(
+                username=request.POST.get('username')).count() != 0:
+                userID = User.objects.filter(
+                    username=request.POST.get('username'))[0].id
+                if HongOSUser.objects.filter(user=userID).count() != 0:
 
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+                    username = request.POST.get('username')
+                    password = request.POST.get('password')
 
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'La sesión se inició correctamente')
-                return redirect('/home/')
+                    user = authenticate(request, username=username, password=password)
+                    if user is not None:
+                        login(request, user)
+                        messages.success(request, 'La sesión se inició correctamente')
+                        return redirect('/home/')
+                    else:
+                        messages.info(
+                            request, 'El usuario o contraseña son incorrectos')
+                        return redirect('/login/')
+                else:
+                    messages.info(
+                        request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
+                    return redirect('/logout/')
             else:
                 messages.info(
-                    request, 'El usuario o contraseña son incorrectos')
-                return redirect('/login/')
-        else:
-            messages.info(
-                request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
-            return redirect('/logout/')
-    if request.method == 'GET':
-        return render(request, 'login.html', {})
+                            request, 'El usuario no existe, por favor, regístrese')
+                return render(request, 'login.html', {})
+        if request.method == 'GET':
+            return render(request, 'login.html', {})
 
 
 @login_required
