@@ -1,1 +1,0 @@
-web: gunicorn hongOS_project.wsgi

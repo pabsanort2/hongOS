@@ -14,6 +14,8 @@ WORKDIR /app
 
 ADD . .
 
-EXPOSE 8000
+# EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000","--workers", "3", "hongOS_project.wsgi:application"]
+# CMD ["gunicorn", "--bind", ":8000","--workers", "3", "hongOS_project.wsgi:application"]
+
+CMD gunicorn hongOS_project.wsgi:application --bind 0.0.0.0:$PORT

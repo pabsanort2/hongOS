@@ -28,7 +28,7 @@ urlpatterns = [
     path('registro/', registro),
     path('login/', loginView),
     path('home/', home),
-    path('', home),
+    path('', home,name='home'),
     path('logout/',logoutView),
     path('busqueda', busqueda, name='busqueda'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
