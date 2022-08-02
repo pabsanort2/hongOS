@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.conf import settings
 
 # Create your views here.
 
@@ -22,13 +22,16 @@ def clasificar(request):
         return render(request, 'clasificar.html', {'form': form, 'method': request.method})
     if request.method == 'POST':
         form = ImagenForm(request.POST or None, request.FILES or None)
+        if request.POST.get('file_name') == '':
+            messages.info(request, 'No ha adjuntado ninguna imagen')
+            return redirect('/clasificar/')
         if form.is_valid and HongOSUser.objects.filter(user=request.user.id).count() != 0:
             form.save()
             username = request.user.username
             imagePath = Path('media/imagenes_hongos/' +
-                             str(form.cleaned_data.get('file_name')))
+                             str(form.cleaned_data.get('file_name')).replace(' ','_'))
             path = Path().resolve()
-            learner = load_learner(path/'89,1207.pkl')
+            learner = load_learner(os.path.join(settings.BASE_DIR, '89,1207.pkl'))
             pred, pred_idx, probs = learner.predict(imagePath)
             prob = '{:.2f}%'.format(probs[pred_idx].item()*100)
             userHongOS = HongOSUser.objects.filter(user=request.user.id)[0]
