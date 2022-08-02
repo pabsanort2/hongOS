@@ -14,11 +14,19 @@
   {% block content %}
 
   <style>
+
+    #messages{
+          margin-top: 10px;
+          margin-left: 715px;
+          width: 30%;
+          text-align: center;
+      }
+
     #file_form {
       position: absolute;
       top: 50%;
       left: 50%;
-      margin-top: -350px;
+      margin-top: -330px;
       margin-left: -200px;
       width: 500px;
       height: 200px;
@@ -58,6 +66,7 @@
       outline: none;
     }
 
+
     #form_button:hover {
       background: #149174;
       color: #0C5645;
@@ -70,7 +79,14 @@
     .row{
       margin-top: 1%;
     }
+    
   </style>
+
+  {%for message in messages%}
+    <div id="messages" class="alert alert-warning" role="alert">
+        <p>{{message}}</p>
+    </div>
+    {%endfor%}
 
   {% if method == "GET" %}
 
