@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Imagen(models.Model):
     file_name = models.ImageField(upload_to='imagenes_hongos')
 
+
 class HongOSUser(models.Model):
     user =  models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
