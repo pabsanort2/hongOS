@@ -63,6 +63,10 @@ def registro(request):
         form2 = HongOSUserForm()
     return render(request, 'registro.html', {'form1': form1, 'form2': form2})
 
+@login_required
+def info(request):
+    return render(request,'info.html',{})
+
 
 @login_required
 def busqueda(request):
