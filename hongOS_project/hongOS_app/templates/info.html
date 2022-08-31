@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{%block title%}HongOS{%endblock%}</title>
+</head>
+
+<body>
+    {% block content %}
+
+    <style>
+        div {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #messages {
+            width: 40%;
+            margin-top: 1%;
+        }
+
+        .closebtn {
+            float: right;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        #texto_hongos {
+            text-align: left;
+        }
+
+        ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        ul li {
+            display: list-item;
+            margin-top: 2%;
+        }
+    </style>
+
+    {%for message in messages%}
+    <div id="messages" class="alert alert-warning" role="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{message}}
+    </div>
+    {%endfor%}
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- List group-->
+            <ul class="list-group shadow">
+                <!-- list group item-->
+                <li id=container_text class="list-group-item">
+                    <!-- Custom content-->
+                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                        <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2">¿Qué tipo de hongos puede clasificar la aplicación?
+                            </h5>
+                            <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                            <h6>La aplicación puede clasificar los siguientes tipos de
+                                hongos: Agaricus, Amanita, boletus, Cortinarus, Entoloma, Hygrocybe, Lactarius, Russula
+                                y Suillus. Dentro de éstos grupos, no clasifica ninguna subespecie, por ejemplo no
+                                distingue entre Amanita muscaria de la Amanita pantherina, simplemente lo clasifica como
+                                Amanita en general.</h6>
+                        </div>
+                    </div>
+                    <!-- End -->
+                </li>
+                <!-- End -->
+
+                <li id=container_text class="list-group-item">
+                    <!-- Custom content-->
+                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                        <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2">¿Cuáles son las fuentes de datos del entrenamiento
+                                del modelo?
+                            </h5>
+                            <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                            <h6>El set de datos de entrenamiento de la aplicación proviene de un post en <a
+                                    href="https://www.kaggle.com/code/yelloworld/mushrooms-classification/data">kaggle</a>.
+                                Se usó este set de datos ya que tenía buena cantidad de imágenes para el entrenamiento
+                                además de tener bastantes grupos de clasificación y una estructura de datos bastante
+                                bien organizada.
+                            </h6>
+                        </div>
+                    </div>
+                    <!-- End -->
+                </li>
+
+            </ul>
+            <!-- End -->
+        </div>
+    </div>
+    </div>
+
+    {% endblock %}
+</body>
+
+</html>
