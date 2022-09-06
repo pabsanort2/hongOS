@@ -21,3 +21,9 @@ class Hongos(models.Model):
     uploader = models.ForeignKey(HongOSUser, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to=image_upload)
 
+class ImagenDataset(models.Model):
+    especie = models.CharField(max_length=20, null=False)
+    tamanio = models.FloatField(null=False)
+    resolucion = models.CharField(max_length=10, null=False)
+    nombre_archivo = models.CharField(max_length=50, null=False)
+

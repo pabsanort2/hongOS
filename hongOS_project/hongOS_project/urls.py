@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from hongOS_app.views import clasificar, loginView, registro, home, logoutView, busqueda, info
+from hongOS_app.views import clasificar, loginView, registro, home, logoutView, busqueda, info, cargar
 from django.contrib.auth.views import LoginView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('clasificar/', clasificar),
+    path('cargar/', cargar),
     path('registro/', registro),
     path('info/', info),
     path('login/', loginView),
