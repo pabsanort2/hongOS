@@ -5,13 +5,15 @@ from fastbook import load_learner
 from pathlib import Path
 import os
 from django.contrib.auth.models import User
-from .models import Hongos, HongOSUser
+from .models import Hongos, HongOSUser, Imagen, ImagenDataset
 from .forms import ImagenForm, HongOSUserForm, UserForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+import PIL
+from PIL import Image
 
 # Create your views here.
 
@@ -28,8 +30,20 @@ def clasificar(request):
         if form.is_valid and HongOSUser.objects.filter(user=request.user.id).count() != 0:
             form.save()
             username = request.user.username
-            imagePath = Path('media/imagenes_hongos/' +
+            imagePath = os.path.join(settings.BASE_DIR, 'media/imagenes_hongos/' +
                              str(form.cleaned_data.get('file_name')).replace(' ','_'))
+
+            #Buscamos si la imagen está en el set de entrenamiento
+
+            tamanio = os.stat(imagePath).st_size
+            picture = PIL.Image.open(imagePath)
+            alto, ancho = picture.size
+            resolucion = str(alto) + 'x' + str(ancho)
+            nombre_archivo = form.cleaned_data.get('file_name')
+            if ImagenDataset.objects.filter(tamanio=tamanio, resolucion=resolucion).count() !=0  or ImagenDataset.objects.filter(nombre_archivo=nombre_archivo).count() !=0 :
+                messages.info(
+                request, 'Es probable que la imagen que haya subido se haya usado para entrenar el modelo de clasificación.')
+
             path = Path().resolve()
             learner = load_learner(os.path.join(settings.BASE_DIR, '89,1207.pkl'))
             pred, pred_idx, probs = learner.predict(imagePath)
@@ -44,6 +58,27 @@ def clasificar(request):
             messages.info(
                 request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
             return redirect('/login/')
+
+@login_required
+def cargar(request):
+    if request.method == 'GET':
+        return render(request, 'cargar.html', {'method': request.method})
+    if request.method == 'POST':
+        directorios = os.listdir(os.path.join(settings.BASE_DIR, 'Mushrooms'))
+        for directorio in directorios:
+            imagenes = os.listdir(os.path.join(settings.BASE_DIR, 'Mushrooms/'+directorio))
+            print(len(imagenes))
+            for imagen in imagenes:
+                ruta = os.path.join(settings.BASE_DIR, 'Mushrooms/'+directorio+'/'+imagen)
+                tamanio = os.stat(ruta).st_size
+                picture = PIL.Image.open(ruta)
+                alto, ancho = picture.size
+                resolucion = str(alto) + 'x' + str(ancho)
+                nombre_archivo = imagen
+                imagenDataset = ImagenDataset(especie=directorio, tamanio=tamanio, resolucion=resolucion,nombre_archivo=nombre_archivo)
+                imagenDataset.save()
+    return render(request, 'cargar.html', {'method': request.method})
+        
 
 
 def registro(request):

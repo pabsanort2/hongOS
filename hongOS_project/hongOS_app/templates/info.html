@@ -98,6 +98,29 @@
                     <!-- End -->
                 </li>
 
+
+                <li id=container_text class="list-group-item">
+                    <!-- Custom content-->
+                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                        <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2">¿Es posible comprobar antes de hacer inferencia si la
+                                imagen ha sido usada en el dataset de entrenamiento?
+                            </h5>
+                            <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                            <h6>Sí, esto es posible y se ha implementado como funcionalidad en la aplicación. Se han
+                                cargado en la base de datos algunos datos básicos sobre las imágenes usadas para
+                                entrenar el modelo, estos datos son tamaño de la imagen, resolución y nombre del
+                                archivo. Antes de hacer inferencia se comprueba si coinciden la resolución y el tamaño
+                                de la imagen o, en su defecto, si coincide el nombre del archivo. Si alguna de las dos
+                                (o las dos) coincide, aparecerá un mensaje de aviso en la clasificación mostrando que es
+                                probable que la imagen que ha subido el usuario probablemente se haya usado para
+                                entrenar el modelo de clasificación.
+                            </h6>
+                        </div>
+                    </div>
+                    <!-- End -->
+                </li>
+
             </ul>
             <!-- End -->
         </div>

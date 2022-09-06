@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{%block title%}HongOS{%endblock%}</title>
+</head>
+
+<body>
+
+  {% block content %}
+
+  <style>
+
+    #messages{
+          margin-top: 10px;
+          margin-left: 715px;
+          width: 30%;
+          text-align: center;
+      }
+
+    #file_form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -330px;
+      margin-left: -200px;
+      width: 500px;
+      height: 200px;
+      /* border: 4px dashed rgb(119, 119, 119); */
+    }
+
+    #form_p {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: 170px;
+      color: #a8a5a5;
+      font-family: Arial;
+    }
+
+    #id_file_name {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      outline: none;
+      opacity: 0;
+    }
+
+    #form_button {
+      margin: 0;
+      color: rgb(255, 255, 255);
+      background: #16a085;
+      border: none;
+      width: 508px;
+      height: 35px;
+      margin-left: -4px;
+      border-radius: 4px;
+      border-bottom: 4px solid #117A60;
+      transition: all .2s ease;
+      outline: none;
+    }
+
+
+    #form_button:hover {
+      background: #149174;
+      color: #0C5645;
+    }
+
+    #form_button:active {
+      border: 0;
+    }
+
+    .row{
+      margin-top: 1%;
+    }
+    
+  </style>
+
+  {%for message in messages%}
+    <div id="messages" class="alert alert-warning" role="alert">
+        <p>{{message}}</p>
+    </div>
+    {%endfor%}
+
+  {% if method == "GET" %}
+  <form id='file_form' action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      <button id='form_button' type="submit">Cargar hongos</button>
+    </div>
+  </form>
+
+  {% endif %}
+
+  {% if method == "POST" %}
+
+  {% if messages %}
+    <div>
+      <p>Ha habido un problema al cargar los hongos</p>
+    </div>
+  {% else %}
+  <div>
+    <p>Los hongos se han cargado correctamente</p>
+  </div>
+  {% endif %}
+
+  {% endif %}
+  {% endblock %}
+</body>
+
+</html>
