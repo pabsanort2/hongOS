@@ -5,13 +5,15 @@ from fastbook import load_learner
 from pathlib import Path
 import os
 from django.contrib.auth.models import User
-from .models import Hongos, HongOSUser
+from .models import Hongos, HongOSUser, Imagen, ImagenDataset
 from .forms import ImagenForm, HongOSUserForm, UserForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+import PIL
+from PIL import Image
 
 # Create your views here.
 
@@ -28,15 +30,39 @@ def clasificar(request):
         if form.is_valid and HongOSUser.objects.filter(user=request.user.id).count() != 0:
             form.save()
             username = request.user.username
-            imagePath = Path('media/imagenes_hongos/' +
+            imagePath = os.path.join(settings.BASE_DIR, 'media/imagenes_hongos/' +
                              str(form.cleaned_data.get('file_name')).replace(' ','_'))
+
+            #Buscamos si la imagen está en el set de entrenamiento
+
+            tamanio = os.stat(imagePath).st_size
+            picture = PIL.Image.open(imagePath)
+            alto, ancho = picture.size
+            resolucion = str(alto) + 'x' + str(ancho)
+            nombre_archivo = form.cleaned_data.get('file_name')
+            if ImagenDataset.objects.filter(tamanio=tamanio, resolucion=resolucion).count() !=0  or ImagenDataset.objects.filter(nombre_archivo=nombre_archivo).count() !=0 :
+                messages.info(
+                request, 'Es probable que la imagen que haya subido se haya usado para entrenar el modelo de clasificación.')
+
             path = Path().resolve()
             learner = load_learner(os.path.join(settings.BASE_DIR, '89,1207.pkl'))
+            clases = ['Agaricus','Amanita','Boletus','Cortinarius','Entoloma','Hygrocybe','Lactarius','Russula','Suillus']
             pred, pred_idx, probs = learner.predict(imagePath)
+            print(pred_idx)
+            zipped = list(zip(probs, clases))
+            srtd = sorted(zipped, key=lambda t: t[0], reverse=True)
+            next2 = srtd[1:3]
+
+            hongo2Prob, hongo2Label = next2[0]
+            hongo3Prob, hongo3Label = next2[1]
+            
+            hongo2Prob = '{:.2f}%'.format(hongo2Prob.item()*100)
+            hongo3Prob = '{:.2f}%'.format(hongo3Prob.item()*100)
+
             prob = '{:.2f}%'.format(probs[pred_idx].item()*100)
             userHongOS = HongOSUser.objects.filter(user=request.user.id)[0]
             hongo = Hongos(nombre=pred, prob=prob, uploader=userHongOS,
-                           imagen=form.cleaned_data.get('file_name'))
+                           imagen=form.cleaned_data.get('file_name'), nombre2=hongo2Label, prob2=hongo2Prob, nombre3=hongo3Label, prob3=hongo3Prob)
             hongo.save()
             os.remove(imagePath)
             return render(request, 'clasificar.html', {'imagePath': imagePath, 'method': request.method, 'hongo': hongo})
@@ -44,6 +70,27 @@ def clasificar(request):
             messages.info(
                 request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
             return redirect('/login/')
+
+@login_required
+def cargar(request):
+    if request.method == 'GET':
+        return render(request, 'cargar.html', {'method': request.method})
+    if request.method == 'POST':
+        directorios = os.listdir(os.path.join(settings.BASE_DIR, 'Mushrooms'))
+        for directorio in directorios:
+            imagenes = os.listdir(os.path.join(settings.BASE_DIR, 'Mushrooms/'+directorio))
+            print(len(imagenes))
+            for imagen in imagenes:
+                ruta = os.path.join(settings.BASE_DIR, 'Mushrooms/'+directorio+'/'+imagen)
+                tamanio = os.stat(ruta).st_size
+                picture = PIL.Image.open(ruta)
+                alto, ancho = picture.size
+                resolucion = str(alto) + 'x' + str(ancho)
+                nombre_archivo = imagen
+                imagenDataset = ImagenDataset(especie=directorio, tamanio=tamanio, resolucion=resolucion,nombre_archivo=nombre_archivo)
+                imagenDataset.save()
+    return render(request, 'cargar.html', {'method': request.method})
+        
 
 
 def registro(request):
@@ -62,6 +109,10 @@ def registro(request):
         form1 = UserForm()
         form2 = HongOSUserForm()
     return render(request, 'registro.html', {'form1': form1, 'form2': form2})
+
+@login_required
+def info(request):
+    return render(request,'info.html',{})
 
 
 @login_required
