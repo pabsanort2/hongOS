@@ -46,11 +46,23 @@ def clasificar(request):
 
             path = Path().resolve()
             learner = load_learner(os.path.join(settings.BASE_DIR, '89,1207.pkl'))
+            clases = ['Agaricus','Amanita','Boletus','Cortinarius','Entoloma','Hygrocybe','Lactarius','Russula','Suillus']
             pred, pred_idx, probs = learner.predict(imagePath)
+            print(pred_idx)
+            zipped = list(zip(probs, clases))
+            srtd = sorted(zipped, key=lambda t: t[0], reverse=True)
+            next2 = srtd[1:3]
+
+            hongo2Prob, hongo2Label = next2[0]
+            hongo3Prob, hongo3Label = next2[1]
+            
+            hongo2Prob = '{:.2f}%'.format(hongo2Prob.item()*100)
+            hongo3Prob = '{:.2f}%'.format(hongo3Prob.item()*100)
+
             prob = '{:.2f}%'.format(probs[pred_idx].item()*100)
             userHongOS = HongOSUser.objects.filter(user=request.user.id)[0]
             hongo = Hongos(nombre=pred, prob=prob, uploader=userHongOS,
-                           imagen=form.cleaned_data.get('file_name'))
+                           imagen=form.cleaned_data.get('file_name'), nombre2=hongo2Label, prob2=hongo2Prob, nombre3=hongo3Label, prob3=hongo3Prob)
             hongo.save()
             os.remove(imagePath)
             return render(request, 'clasificar.html', {'imagePath': imagePath, 'method': request.method, 'hongo': hongo})
