@@ -1,4 +1,5 @@
 import email
+from fileinput import filename
 from unicodedata import name
 from django.shortcuts import render, redirect
 from fastbook import load_learner
@@ -31,7 +32,7 @@ def clasificar(request):
             form.save()
             username = request.user.username
             imagePath = os.path.join(settings.BASE_DIR, 'media/imagenes_hongos/' +
-                             str(form.cleaned_data.get('file_name')).replace(' ','_'))
+                             str(form.cleaned_data.get('file_name')).replace(' ','_').replace('(','').replace(')','').replace('ñ',''))
 
             #Buscamos si la imagen está en el set de entrenamiento
 
@@ -43,6 +44,19 @@ def clasificar(request):
             if ImagenDataset.objects.filter(tamanio=tamanio, resolucion=resolucion).count() !=0  or ImagenDataset.objects.filter(nombre_archivo=nombre_archivo).count() !=0 :
                 messages.info(
                 request, 'Es probable que la imagen que haya subido se haya usado para entrenar el modelo de clasificación.')
+
+            for f in Hongos.objects.filter(uploader=HongOSUser.objects.filter(user=request.user.id)[0]):
+                savedImage = PIL.Image.open(f.imagen)
+                nombre_archivo2 = f.imagen.url.split('/')[-1]
+                print(nombre_archivo2)
+                alto2, ancho2 = savedImage.size
+                resolucion2 = str(alto2) + 'x' + str(ancho2)
+                if(nombre_archivo2 == nombre_archivo or resolucion2 == resolucion):
+                    messages.info(request, 'Es probable que ya hayas subido esta imagen.')
+                    ruta = 'imagenes_hongos/'+request.user.username+'/'+str(nombre_archivo2)
+                    print(ruta)
+                    hongo = Hongos.objects.filter(imagen=ruta)[0]
+                    return render(request, 'clasificar.html', {'imagePath': imagePath, 'method': request.method, 'hongo': hongo})
 
             path = Path().resolve()
             learner = load_learner(os.path.join(settings.BASE_DIR, '89,1207.pkl'))
