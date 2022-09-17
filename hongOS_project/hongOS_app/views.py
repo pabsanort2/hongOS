@@ -118,8 +118,9 @@ def info(request):
 @login_required
 def busqueda(request):
     if request.method == "POST":
+        usuario = HongOSUser.objects.filter(user=request.user.id)[0]
         busqueda = request.POST.get('busqueda')
-        hongos = Hongos.objects.filter(nombre__contains=busqueda)
+        hongos = list(Hongos.objects.filter(nombre__contains=busqueda, uploader=usuario))
 
         if len(busqueda) != 0:
             return render(request, 'busqueda.html', {'busqueda': busqueda, 'hongos': hongos})
