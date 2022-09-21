@@ -118,15 +118,20 @@
             <div id='texto_hongos' class=" media-body order-2 order-lg-1">
               <h5 class="mt-0 font-weight-bold mb-2">El hongo de la imagen es del género: {{hongo.nombre}}</h5>
               <!-- <p class="font-italic text-muted mb-0 small"></p> -->
-              <h6 class="font-weight-bold my-2">Probabilidad: {{hongo.prob}}</h6>
+              {%if hongo.prob >= 1%}
+              <h6 class="font-weight-bold my-2">Probabilidad: {{hongo.prob}}%</h6>
+              {%endif%}
+              {%if hongo.prob2 >= 1 or hongo.prob3 >= 1 %}
               <h6 class="font-weight-bold my-2">También puede ser:</h6>
               <ul class="list-group list-group-flush">
-
-                <li class="list-group-item">{{hongo.nombre2}}, probabilidad: {{hongo.prob2}}</li>
-                <li class="list-group-item">{{hongo.nombre3}}, probabilidad: {{hongo.prob3}}</li>
-
+                {%if hongo.prob2 >= 1%}
+                <li class="list-group-item">{{hongo.nombre2}}, probabilidad: {{hongo.prob2}}%</li>
+                {%endif%}
+                {%if hongo.prob3 >= 1%}
+                <li class="list-group-item">{{hongo.nombre3}}, probabilidad: {{hongo.prob3}}%</li>
+                {%endif%}
               </ul>
-
+              {%endif%}
             </div><img src='{{hongo.imagen.url}}' alt='{{hongo.nombre}}' width="200" class="ml-lg-5 order-1 order-lg-2">
           </div> <!-- End -->
         </li> <!-- End -->

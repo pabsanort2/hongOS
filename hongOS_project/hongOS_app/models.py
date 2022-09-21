@@ -17,13 +17,13 @@ class Hongos(models.Model):
         return 'imagenes_hongos/'+str(self.uploader.user)+'/'+str(filename)
 
     nombre = models.CharField(max_length=20, null=False)
-    prob = models.CharField(max_length=20, null=False)
+    prob = models.FloatField(max_length=20, null=False)
     uploader = models.ForeignKey(HongOSUser, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to=image_upload)
     nombre2 = models.CharField(max_length=20)
-    prob2 = models.CharField(max_length=20)
+    prob2 = models.FloatField(max_length=20)
     nombre3 = models.CharField(max_length=20)
-    prob3 = models.CharField(max_length=20)
+    prob3 = models.FloatField(max_length=20)
 
 class ImagenDataset(models.Model):
     especie = models.CharField(max_length=20, null=False)
