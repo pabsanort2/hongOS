@@ -8,7 +8,17 @@
     <title>{%block title%}Base{%endblock%}</title>
 </head>
 <body>
+
+    <style>
+
+        #github {
+            margin-left: -4;
+            margin-right: 10;
+        }
+    </style>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a id="github" href="https://github.com/pabsanort2/hongOS" target="_blank" rel="noopener noreferrer"><img src="{% static 'github.png' %}" alt="enlace github"></a>
         <a class="navbar-brand" href="/home">HongOS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
