@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 <html lang="es">
 
@@ -48,6 +49,10 @@
             display: list-item;
             margin-top: 2%;
         }
+
+        #parrafo_fotos{
+            margin-top: 2%;
+        }
     </style>
 
     {%for message in messages%}
@@ -69,28 +74,148 @@
                             </h5>
                             <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                             <h6>La aplicación puede clasificar los siguientes tipos de
-                                hongos: Agaricus, Amanita, boletus, Cortinarus, Entoloma, Hygrocybe, Lactarius, Russula
-                                y Suillus. Dentro de éstos grupos, no clasifica ninguna subespecie, por ejemplo no
+                                hongos:</h6>
+                            <div class="row">
+                                <div class="col-lg-8 mx-auto">
+                                    <!-- List group-->
+                                    <ul class="list-group shadow">
+                                        <!-- list group item-->
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Agaricus</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'agaricus.jpg' %}" alt="agaricus" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Amanita</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'amanita.jpg' %}" alt="amanita" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Boletus</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'boletus.jpg' %}" alt="boletus" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Cortinarius</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'cortinarius.jpg' %}" alt="cortinarius" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Entoloma</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'entoloma.jpg' %}" alt="entoloma" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Hygrocybe</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'hygrocybe.jpg' %}" alt="hygrocybe" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Lactarius</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'lactarius.jpg' %}" alt="lactarius" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Russula</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'russula.jpg' %}" alt="russula" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <li class="list-group-item">
+                                            <!-- Custom content-->
+                                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                    <h5 class="mt-0 font-weight-bold mb-2">Suillus</h5>
+                                                    <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                                                </div>
+                                                <img src="{% static 'suillus.jpg' %}" alt="suillus" width="200"
+                                                    class="ml-lg-5 order-1 order-lg-2" />
+                                            </div>
+                                            <!-- End -->
+                                        </li>
+                                        <!-- End -->
+                                    </ul>
+                                    <!-- End -->
+                                </div>
+                            </div>
+
+                            
+
+                            <h6 id="parrafo_fotos">Dentro de éstos grupos, no clasifica ninguna subespecie, por ejemplo no
                                 distingue entre Amanita muscaria de la Amanita pantherina, simplemente lo clasifica como
                                 Amanita en general.</h6>
-                        </div>
-                    </div>
-                    <!-- End -->
-                </li>
-                <!-- End -->
 
                 <li id=container_text class="list-group-item">
                     <!-- Custom content-->
                     <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                         <div id="texto_hongos" class="media-body order-2 order-lg-1">
-                            <h5 class="mt-0 font-weight-bold mb-2">¿Cuáles son las fuentes de datos del entrenamiento
+                            <h5 class="mt-0 font-weight-bold mb-2">¿Cuáles son las fuentes de
+                                datos del entrenamiento
                                 del modelo?
                             </h5>
                             <!-- <p class="font-italic text-muted mb-0 small"></p> -->
-                            <h6>El set de datos de entrenamiento de la aplicación proviene de un post en <a
+                            <h6>El set de datos de entrenamiento de la aplicación proviene de un
+                                post en <a
                                     href="https://www.kaggle.com/code/yelloworld/mushrooms-classification/data">kaggle</a>.
-                                Se usó este set de datos ya que tenía buena cantidad de imágenes para el entrenamiento
-                                además de tener bastantes grupos de clasificación y una estructura de datos bastante
+                                Se usó este set de datos ya que tenía buena cantidad de imágenes
+                                para el entrenamiento
+                                además de tener bastantes grupos de clasificación y una
+                                estructura de datos bastante
                                 bien organizada.
                             </h6>
                         </div>
@@ -103,17 +228,25 @@
                     <!-- Custom content-->
                     <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                         <div id="texto_hongos" class="media-body order-2 order-lg-1">
-                            <h5 class="mt-0 font-weight-bold mb-2">¿Es posible comprobar antes de hacer inferencia si la
+                            <h5 class="mt-0 font-weight-bold mb-2">¿Es posible comprobar antes
+                                de hacer inferencia si la
                                 imagen ha sido usada en el dataset de entrenamiento?
                             </h5>
                             <!-- <p class="font-italic text-muted mb-0 small"></p> -->
-                            <h6>Sí, esto es posible y se ha implementado como funcionalidad en la aplicación. Se han
-                                cargado en la base de datos algunos datos básicos sobre las imágenes usadas para
-                                entrenar el modelo, estos datos son tamaño de la imagen, resolución y nombre del
-                                archivo. Antes de hacer inferencia se comprueba si coinciden la resolución y el tamaño
-                                de la imagen o, en su defecto, si coincide el nombre del archivo. Si alguna de las dos
-                                (o las dos) coincide, aparecerá un mensaje de aviso en la clasificación mostrando que es
-                                probable que la imagen que ha subido el usuario probablemente se haya usado para
+                            <h6>Sí, esto es posible y se ha implementado como funcionalidad en
+                                la aplicación. Se han
+                                cargado en la base de datos algunos datos básicos sobre las
+                                imágenes usadas para
+                                entrenar el modelo, estos datos son tamaño de la imagen,
+                                resolución y nombre del
+                                archivo. Antes de hacer inferencia se comprueba si coinciden la
+                                resolución y el tamaño
+                                de la imagen o, en su defecto, si coincide el nombre del
+                                archivo. Si alguna de las dos
+                                (o las dos) coincide, aparecerá un mensaje de aviso en la
+                                clasificación mostrando que es
+                                probable que la imagen que ha subido el usuario probablemente se
+                                haya usado para
                                 entrenar el modelo de clasificación.
                             </h6>
                         </div>
