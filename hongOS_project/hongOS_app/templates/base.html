@@ -34,17 +34,17 @@
             display: none;
         }
 
-        #logout-mobile{
+        #logout-mobile {
             display: none;
         }
 
         @media only screen and (max-width: 1000px) {
 
-            #logout-mobile{
-            display: inline;
-        }
+            #logout-mobile {
+                display: inline;
+            }
 
-            #barra-busqueda{
+            #barra-busqueda {
                 width: 50%;
             }
 
@@ -71,7 +71,7 @@
                 z-index: 1;
             }
 
-            #complete-navbar{
+            #complete-navbar {
                 margin-bottom: 5px;
             }
 
@@ -110,23 +110,26 @@
             </form>
         </ul>
 
-        <img class="menu-icon" src="{% static 'menu-icon.png' %}" alt="menu-icon" onclick="toggleMenu()"/>
+        <img class="menu-icon" src="{% static 'menu-icon.png' %}" alt="menu-icon" onclick="toggleMenu()" />
         <a id="logout" type="button" class="btn btn-outline-danger" href="/logout">Logout</a>
     </nav>
 
     <script>
 
-        var menuList = document.getElementById("navbar");
-        menuList.style.display = "none";
 
-        function toggleMenu(){
-            if (menuList.style.display == "none"){
-                menuList.style.display = "inline";
-            } else{
-                menuList.style.display = "none";
+            var menuList = document.getElementById("navbar");
+            menuList.style.display = "none";
+
+            function toggleMenu() {
+                if (menuList.style.display == "none") {
+                    menuList.style.display = "inline";
+                } else {
+                    menuList.style.display = "none";
+                }
             }
-        }
-
+            if(screen.width >= 1000){
+                    menuList.style.display = "";
+                }
     </script>
 
     {% block content %}{% endblock %}
