@@ -1,21 +1,84 @@
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"></script>
     <title>{%block title%}Base{%endblock%}</title>
 </head>
+
 <body>
+
+    <style>
+        #github {
+            margin-left: -4;
+            margin-right: 10;
+        }
+
+        #barra-busqueda {
+            margin: auto;
+        }
+
+        #logout {
+            margin-left: 5;
+        }
+
+        .menu-icon {
+            display: none;
+        }
+
+        #logout-mobile{
+            display: none;
+        }
+
+        @media only screen and (max-width: 1000px) {
+
+            #logout-mobile{
+            display: inline;
+        }
+
+            #barra-busqueda{
+                width: 50%;
+            }
+
+            .menu-icon {
+                display: inline;
+                cursor: pointer;
+            }
+
+            #logout {
+                display: none;
+            }
+
+            #navbar {
+                outline-style: solid;
+                outline-width: 0.5px;
+                outline-color: #131313;
+                text-align: center;
+                display: block;
+                background: #bbbbbb;
+                right: 0;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                z-index: 1;
+            }
+
+        }
+    </style>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a id="github" href="https://github.com/pabsanort2/hongOS" target="_blank" rel="noopener noreferrer"><img
+                src="{% static 'github.png' %}" alt="enlace github"></a>
         <a class="navbar-brand" href="/home">HongOS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <ul class="navbar-nav mr-auto">
+        <ul id="navbar" class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
@@ -25,37 +88,44 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/info">Info <span class="sr-only">(current)</span></a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>  -->
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </li> -->
-            <!-- <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li> -->
+            <li class="nav-item active">
+                <a id="logout-mobile" type="button" class="nav-link" href="/logout">Logout</a>
+            </li>
         </ul>
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto" id="busqueda">
             <form class="form-inline my-2 my-lg-0" method="POST" action="{%url 'busqueda'%}">
                 {%csrf_token%}
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar hongos" aria-label="Search" name="busqueda">
-                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg"
-                        width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar hongos" aria-label="Search"
+                    name="busqueda" id="barra-busqueda">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
                         <path
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg></button>
             </form>
         </ul>
-        <a type="button" class="btn btn-outline-danger" href="/logout">Logout</a>
+
+        <img class="menu-icon" src="{% static 'menu-icon.png' %}" alt="menu-icon" onclick="toggleMenu()"/>
+        <a id="logout" type="button" class="btn btn-outline-danger" href="/logout">Logout</a>
     </nav>
+
+    <script>
+
+        var menuList = document.getElementById("navbar");
+        menuList.style.display = "none";
+
+        function toggleMenu(){
+            if (menuList.style.display == "none"){
+                menuList.style.display = "inline";
+            } else{
+                menuList.style.display = "none";
+            }
+        }
+
+    </script>
+
     {% block content %}{% endblock %}
 </body>
+
 </html>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    

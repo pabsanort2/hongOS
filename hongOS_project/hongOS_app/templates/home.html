@@ -1,101 +1,119 @@
 {% extends "base.html" %}
 
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{%block title%}HongOS{%endblock%}</title>
-  </head>
 
-  <body>
-    {% block content %}
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.7">
+  <title>{%block title%}HongOS{%endblock%}</title>
+</head>
 
-    <style>
-      div {
-        text-align: center;
-        margin: 0 auto;
-      }
+<body>
+  {% block content %}
 
-      #messages {
-        width: 40%;
-        margin-top: 1%;
-      }
+  <style>
+    div {
+      text-align: center;
+      margin: 0 auto;
+    }
 
-      .closebtn {
-        float: right;
-        cursor: pointer;
-        transition: 0.3s;
-      }
+    #messages {
+      width: 40%;
+      margin-top: 1%;
+    }
 
-      * {
-        box-sizing: border-box;
+    .closebtn {
+      float: right;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    #texto_hongos {
+      text-align: left;
+    }
+
+    @media only screen and (max-width: 1000px) {
+      ul img {
+        margin: auto;
       }
 
       #texto_hongos {
-        text-align: left;
+        margin-top: 0px;
+        margin: auto;
+        text-align: center;
       }
-    </style>
 
-    {%for message in messages%}
-    <div id="messages" class="alert alert-warning" role="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';"
-        >&times;</span
-      >
-      {{message}}
-    </div>
-    {%endfor%}
+      #div-lista-hongos{
+        width: 60%;
+      }
 
-    <div class="container py-5">
-      <div class="row text-center mb-5">
-        {%if hongos%}
-        <div class="col-lg-7 mx-auto">
-          <h1 class="">Tus últimos hongos registrados</h1>
-        </div>
-        {%else%}
-        <div>
-          <h1>Aún no has registrado ningún hongo</h1>
-        </div>
-        {%endif%}
+    }
+  </style>
+
+  {%for message in messages%}
+  <div id="messages" class="alert alert-warning" role="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{message}}
+  </div>
+  {%endfor%}
+
+  <div class="container py-5">
+    <div class="row text-center mb-5">
+      {%if hongos%}
+      <div class="col-lg-7 mx-auto">
+        <h1 class="">Tus últimos hongos registrados</h1>
       </div>
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <!-- List group-->
-          <ul class="list-group shadow">
-            <!-- list group item-->
-            {%for hongo in hongos%}
-            <li class="list-group-item">
-              <!-- Custom content-->
-              <div
-                class="media align-items-lg-center flex-column flex-lg-row p-3"
-              >
-                <div id="texto_hongos" class="media-body order-2 order-lg-1">
-                  <h5 class="mt-0 font-weight-bold mb-2">{{hongo.nombre}}</h5>
-                  <!-- <p class="font-italic text-muted mb-0 small"></p> -->
-                  <h6 class="font-weight-bold my-2">{{hongo.prob}}</h6>
-                  <h6>También puede ser:</h6>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{hongo.nombre2}}, probabilidad: {{hongo.prob2}}</li>
-                    <li class="list-group-item">{{hongo.nombre3}}, probabilidad: {{hongo.prob3}}</li>
-                  </ul>
-                </div>
-                <img
-                  src="{{hongo.imagen.url}}"
-                  alt="{{hongo.nombre}}"
-                  width="200"
-                  class="ml-lg-5 order-1 order-lg-2"
-                />
+      {%else%}
+      <div>
+        <h1>Aún no has registrado ningún hongo</h1>
+      </div>
+      {%endif%}
+    </div>
+    <div class="row">
+      <div id="div-lista-hongos" class="col-lg-8 mx-auto">
+        <!-- List group-->
+        <ul class="list-group shadow">
+          <!-- list group item-->
+          {%for hongo in hongos%}
+          <li class="list-group-item">
+            <!-- Custom content-->
+            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+              <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                <h5 class="mt-0 font-weight-bold mb-2">{{hongo.nombre}}</h5>
+                <!-- <p class="font-italic text-muted mb-0 small"></p> -->
+                {%if hongo.prob >= 1%}
+                <h6 class="font-weight-bold my-2">{{hongo.prob}}%</h6>
+                {%endif%}
+                {%if hongo.prob2 >= 1 or hongo.prob3 >= 1 %}
+                <h6>También puede ser:</h6>
+                <ul class="list-group list-group-flush">
+                  {%if hongo.prob2 >= 1%}
+                  <li class="list-group-item">{{hongo.nombre2}}, probabilidad: {{hongo.prob2}}%</li>
+                  {%endif%}
+                  {%if hongo.prob3 >= 1%}
+                  <li class="list-group-item">{{hongo.nombre3}}, probabilidad: {{hongo.prob3}}%</li>
+                  {%endif%}
+                </ul>
+                {%endif%}
               </div>
-              <!-- End -->
-            </li>
+              <img src="{{hongo.imagen.url}}" alt="{{hongo.nombre}}" width="200" class="ml-lg-5 order-1 order-lg-2" />
+            </div>
             <!-- End -->
-            {%endfor%}
-          </ul>
+          </li>
           <!-- End -->
-        </div>
+          {%endfor%}
+        </ul>
+        <!-- End -->
       </div>
     </div>
+  </div>
 
-    {% endblock %}
-  </body>
+  {% endblock %}
+</body>
+
 </html>

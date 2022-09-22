@@ -1,4 +1,5 @@
 import email
+from fileinput import filename
 from unicodedata import name
 from django.shortcuts import render, redirect
 from fastbook import load_learner
@@ -17,6 +18,7 @@ from PIL import Image
 
 # Create your views here.
 
+
 @login_required
 def clasificar(request):
     if request.method == 'GET':
@@ -31,35 +33,51 @@ def clasificar(request):
             form.save()
             username = request.user.username
             imagePath = os.path.join(settings.BASE_DIR, 'media/imagenes_hongos/' +
-                             str(form.cleaned_data.get('file_name')).replace(' ','_'))
+                                     str(form.cleaned_data.get('file_name')).replace(' ', '_').replace('(', '').replace(')', '').replace('ñ', ''))
 
-            #Buscamos si la imagen está en el set de entrenamiento
+            # Buscamos si la imagen está en el set de entrenamiento
 
             tamanio = os.stat(imagePath).st_size
             picture = PIL.Image.open(imagePath)
             alto, ancho = picture.size
             resolucion = str(alto) + 'x' + str(ancho)
             nombre_archivo = form.cleaned_data.get('file_name')
-            if ImagenDataset.objects.filter(tamanio=tamanio, resolucion=resolucion).count() !=0  or ImagenDataset.objects.filter(nombre_archivo=nombre_archivo).count() !=0 :
+            if ImagenDataset.objects.filter(tamanio=tamanio, resolucion=resolucion).count() != 0 or ImagenDataset.objects.filter(nombre_archivo=nombre_archivo).count() != 0:
                 messages.info(
-                request, 'Es probable que la imagen que haya subido se haya usado para entrenar el modelo de clasificación.')
+                    request, 'Es probable que la imagen que haya subido se haya usado para entrenar el modelo de clasificación.')
+
+            for f in Hongos.objects.filter(uploader=HongOSUser.objects.filter(user=request.user.id)[0]):
+                savedImage = PIL.Image.open(f.imagen)
+                nombre_archivo2 = f.imagen.url.split('/')[-1]
+                print(nombre_archivo2)
+                alto2, ancho2 = savedImage.size
+                resolucion2 = str(alto2) + 'x' + str(ancho2)
+                if (nombre_archivo2 == nombre_archivo or resolucion2 == resolucion):
+                    messages.info(
+                        request, 'Es probable que ya hayas subido esta imagen.')
+                    ruta = 'imagenes_hongos/' + \
+                        request.user.username+'/'+str(nombre_archivo2)
+                    print(ruta)
+                    hongo = Hongos.objects.filter(imagen=ruta)[0]
+                    return render(request, 'clasificar.html', {'imagePath': imagePath, 'method': request.method, 'hongo': hongo})
 
             path = Path().resolve()
-            learner = load_learner(os.path.join(settings.BASE_DIR, '89,1207.pkl'))
-            clases = ['Agaricus','Amanita','Boletus','Cortinarius','Entoloma','Hygrocybe','Lactarius','Russula','Suillus']
+            learner = load_learner(os.path.join(
+                settings.BASE_DIR, '89,1207.pkl'))
+            clases = ['Agaricus', 'Amanita', 'Boletus', 'Cortinarius',
+                      'Entoloma', 'Hygrocybe', 'Lactarius', 'Russula', 'Suillus']
             pred, pred_idx, probs = learner.predict(imagePath)
-            print(pred_idx)
             zipped = list(zip(probs, clases))
             srtd = sorted(zipped, key=lambda t: t[0], reverse=True)
             next2 = srtd[1:3]
 
             hongo2Prob, hongo2Label = next2[0]
             hongo3Prob, hongo3Label = next2[1]
-            
-            hongo2Prob = '{:.2f}%'.format(hongo2Prob.item()*100)
-            hongo3Prob = '{:.2f}%'.format(hongo3Prob.item()*100)
 
-            prob = '{:.2f}%'.format(probs[pred_idx].item()*100)
+            hongo2Prob = round(hongo2Prob.item()*100, 2)
+            hongo3Prob = round(hongo3Prob.item()*100, 2)
+
+            prob = round(probs[pred_idx].item()*100, 2)
             userHongOS = HongOSUser.objects.filter(user=request.user.id)[0]
             hongo = Hongos(nombre=pred, prob=prob, uploader=userHongOS,
                            imagen=form.cleaned_data.get('file_name'), nombre2=hongo2Label, prob2=hongo2Prob, nombre3=hongo3Label, prob3=hongo3Prob)
@@ -71,6 +89,7 @@ def clasificar(request):
                 request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
             return redirect('/login/')
 
+
 @login_required
 def cargar(request):
     if request.method == 'GET':
@@ -78,19 +97,21 @@ def cargar(request):
     if request.method == 'POST':
         directorios = os.listdir(os.path.join(settings.BASE_DIR, 'Mushrooms'))
         for directorio in directorios:
-            imagenes = os.listdir(os.path.join(settings.BASE_DIR, 'Mushrooms/'+directorio))
+            imagenes = os.listdir(os.path.join(
+                settings.BASE_DIR, 'Mushrooms/'+directorio))
             print(len(imagenes))
             for imagen in imagenes:
-                ruta = os.path.join(settings.BASE_DIR, 'Mushrooms/'+directorio+'/'+imagen)
+                ruta = os.path.join(settings.BASE_DIR,
+                                    'Mushrooms/'+directorio+'/'+imagen)
                 tamanio = os.stat(ruta).st_size
                 picture = PIL.Image.open(ruta)
                 alto, ancho = picture.size
                 resolucion = str(alto) + 'x' + str(ancho)
                 nombre_archivo = imagen
-                imagenDataset = ImagenDataset(especie=directorio, tamanio=tamanio, resolucion=resolucion,nombre_archivo=nombre_archivo)
+                imagenDataset = ImagenDataset(
+                    especie=directorio, tamanio=tamanio, resolucion=resolucion, nombre_archivo=nombre_archivo)
                 imagenDataset.save()
     return render(request, 'cargar.html', {'method': request.method})
-        
 
 
 def registro(request):
@@ -110,16 +131,19 @@ def registro(request):
         form2 = HongOSUserForm()
     return render(request, 'registro.html', {'form1': form1, 'form2': form2})
 
+
 @login_required
 def info(request):
-    return render(request,'info.html',{})
+    return render(request, 'info.html', {})
 
 
 @login_required
 def busqueda(request):
     if request.method == "POST":
+        usuario = HongOSUser.objects.filter(user=request.user.id)[0]
         busqueda = request.POST.get('busqueda')
-        hongos = Hongos.objects.filter(nombre__contains=busqueda)
+        hongos = list(Hongos.objects.filter(
+            nombre__contains=busqueda, uploader=usuario))
 
         if len(busqueda) != 0:
             return render(request, 'busqueda.html', {'busqueda': busqueda, 'hongos': hongos})
@@ -131,35 +155,37 @@ def busqueda(request):
 
 def loginView(request):
 
-        if request.method == 'POST':
-            if User.objects.filter(
+    if request.method == 'POST':
+        if User.objects.filter(
                 username=request.POST.get('username')).count() != 0:
-                userID = User.objects.filter(
-                    username=request.POST.get('username'))[0].id
-                if HongOSUser.objects.filter(user=userID).count() != 0:
+            userID = User.objects.filter(
+                username=request.POST.get('username'))[0].id
+            if HongOSUser.objects.filter(user=userID).count() != 0:
 
-                    username = request.POST.get('username')
-                    password = request.POST.get('password')
+                username = request.POST.get('username')
+                password = request.POST.get('password')
 
-                    user = authenticate(request, username=username, password=password)
-                    if user is not None:
-                        login(request, user)
-                        messages.success(request, 'La sesión se inició correctamente')
-                        return redirect('/home/')
-                    else:
-                        messages.info(
-                            request, 'El usuario o contraseña son incorrectos')
-                        return redirect('/login/')
+                user = authenticate(
+                    request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    messages.success(
+                        request, 'La sesión se inició correctamente')
+                    return redirect('/home/')
                 else:
                     messages.info(
-                        request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
-                    return redirect('/logout/')
+                        request, 'El usuario o contraseña son incorrectos')
+                    return redirect('/login/')
             else:
                 messages.info(
-                            request, 'El usuario no existe, por favor, regístrese')
-                return render(request, 'login.html', {})
-        if request.method == 'GET':
+                    request, 'El usuario con el que está intentando acceder no está correctamente creado, por favor, cree otro o inténtelo de nuevo')
+                return redirect('/logout/')
+        else:
+            messages.info(
+                request, 'El usuario no existe, por favor, regístrese')
             return render(request, 'login.html', {})
+    if request.method == 'GET':
+        return render(request, 'login.html', {})
 
 
 @login_required

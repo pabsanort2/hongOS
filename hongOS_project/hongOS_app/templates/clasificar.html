@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.7">
   <title>{%block title%}HongOS{%endblock%}</title>
 </head>
 
@@ -15,8 +15,10 @@
 
   <style>
     #messages {
-      margin-top: 10px;
-      margin-left: 715px;
+      margin: auto;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding: 10px;
       width: 30%;
       text-align: center;
     }
@@ -78,6 +80,38 @@
     .row {
       margin-top: 1%;
     }
+
+    @media only screen and (max-width: 1000px) {
+
+      #form_button {
+        width: 254px;
+      }
+
+      #file_form {
+        margin-left: -120px;
+        width: 250px;
+      }
+
+      #form_p {
+        font-size: 13px;
+      }
+
+      ul img {
+        margin: auto;
+      }
+
+      #texto_hongos {
+        margin-top: 0px;
+        margin: auto;
+        text-align: center;
+      }
+
+      #container {
+        width: 95%;
+        margin: auto;
+      }
+
+    }
   </style>
 
   {%for message in messages%}
@@ -96,7 +130,7 @@
 
   <form id='file_form' action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <div>
+    <div id="modulo-subida">
       <input type="file" onchange="changeText()" name="file_name" accept="image/*" id="id_file_name">
       <p id="form_p">Haz click aquí para subir tu imagen</p>
       <button id='form_button' type="submit">Subir</button>
@@ -107,7 +141,7 @@
 
   {% if method == "POST" %}
 
-  <div class="row">
+  <div id="container" class="row">
     <div class="col-lg-8 mx-auto">
       <!-- List group-->
       <ul class="list-group shadow">
@@ -118,15 +152,20 @@
             <div id='texto_hongos' class=" media-body order-2 order-lg-1">
               <h5 class="mt-0 font-weight-bold mb-2">El hongo de la imagen es del género: {{hongo.nombre}}</h5>
               <!-- <p class="font-italic text-muted mb-0 small"></p> -->
-              <h6 class="font-weight-bold my-2">Probabilidad: {{hongo.prob}}</h6>
+              {%if hongo.prob >= 1%}
+              <h6 class="font-weight-bold my-2">Probabilidad: {{hongo.prob}}%</h6>
+              {%endif%}
+              {%if hongo.prob2 >= 1 or hongo.prob3 >= 1 %}
               <h6 class="font-weight-bold my-2">También puede ser:</h6>
               <ul class="list-group list-group-flush">
-
-                <li class="list-group-item">{{hongo.nombre2}}, probabilidad: {{hongo.prob2}}</li>
-                <li class="list-group-item">{{hongo.nombre3}}, probabilidad: {{hongo.prob3}}</li>
-
+                {%if hongo.prob2 >= 1%}
+                <li class="list-group-item">{{hongo.nombre2}}, probabilidad: {{hongo.prob2}}%</li>
+                {%endif%}
+                {%if hongo.prob3 >= 1%}
+                <li class="list-group-item">{{hongo.nombre3}}, probabilidad: {{hongo.prob3}}%</li>
+                {%endif%}
               </ul>
-
+              {%endif%}
             </div><img src='{{hongo.imagen.url}}' alt='{{hongo.nombre}}' width="200" class="ml-lg-5 order-1 order-lg-2">
           </div> <!-- End -->
         </li> <!-- End -->
