@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7e">
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <title>HongOS</title>
 </head>
@@ -34,6 +34,12 @@
 
         * {
             box-sizing: border-box;
+        }
+
+        @media only screen and (max-width: 1000px) {
+            div{
+                width: 70%;
+            }
         }
     </style>
 

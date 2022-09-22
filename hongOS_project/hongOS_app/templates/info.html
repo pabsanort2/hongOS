@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.7" />
     <title>{%block title%}HongOS{%endblock%}</title>
 </head>
 
@@ -50,8 +50,27 @@
             margin-top: 2%;
         }
 
-        #parrafo_fotos{
+        #parrafo_fotos {
             margin-top: 2%;
+        }
+
+        @media only screen and (max-width: 1000px) {
+
+            ul img {
+                margin: auto;
+            }
+
+            #texto-imagen {
+                margin-top: 0px;
+                margin: auto;
+                text-align: center;
+            }
+
+            #container {
+                width: 95%;
+                margin: auto;
+            }
+
         }
     </style>
 
@@ -61,7 +80,7 @@
         {{message}}
     </div>
     {%endfor%}
-    <div class="row">
+    <div id="container" class="row">
         <div class="col-lg-8 mx-auto">
             <!-- List group-->
             <ul class="list-group shadow">
@@ -69,7 +88,7 @@
                 <li id=container_text class="list-group-item">
                     <!-- Custom content-->
                     <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                        <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                        <div id="texto-hongos" class="media-body order-2 order-lg-1">
                             <h5 class="mt-0 font-weight-bold mb-2">¿Qué tipo de hongos puede clasificar la aplicación?
                             </h5>
                             <!-- <p class="font-italic text-muted mb-0 small"></p> -->
@@ -83,7 +102,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Agaricus</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -95,7 +114,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Amanita</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -107,7 +126,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Boletus</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -119,7 +138,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Cortinarius</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -131,7 +150,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Entoloma</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -143,7 +162,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Hygrocybe</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -155,7 +174,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Lactarius</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -167,7 +186,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Russula</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -179,7 +198,7 @@
                                         <li class="list-group-item">
                                             <!-- Custom content-->
                                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                <div id="texto_hongos" class="media-body order-2 order-lg-1">
+                                                <div id="texto-imagen" class="media-body order-2 order-lg-1">
                                                     <h5 class="mt-0 font-weight-bold mb-2">Suillus</h5>
                                                     <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                                                 </div>
@@ -194,9 +213,10 @@
                                 </div>
                             </div>
 
-                            
 
-                            <h6 id="parrafo_fotos">Dentro de éstos grupos, no clasifica ninguna subespecie, por ejemplo no
+
+                            <h6 id="parrafo_fotos">Dentro de éstos grupos, no clasifica ninguna subespecie, por ejemplo
+                                no
                                 distingue entre Amanita muscaria de la Amanita pantherina, simplemente lo clasifica como
                                 Amanita en general.</h6>
 
