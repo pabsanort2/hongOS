@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.7">
   <title>{%block title%}HongOS{%endblock%}</title>
 </head>
 
@@ -36,6 +36,23 @@
     #texto_hongos {
       text-align: left;
     }
+
+    @media only screen and (max-width: 1000px) {
+      ul img {
+        margin: auto;
+      }
+
+      #texto_hongos {
+        margin-top: 0px;
+        margin: auto;
+        text-align: center;
+      }
+
+      #div-lista-hongos{
+        width: 60%;
+      }
+
+    }
   </style>
 
   {%for message in messages%}
@@ -58,7 +75,7 @@
       {%endif%}
     </div>
     <div class="row">
-      <div class="col-lg-8 mx-auto">
+      <div id="div-lista-hongos" class="col-lg-8 mx-auto">
         <!-- List group-->
         <ul class="list-group shadow">
           <!-- list group item-->
@@ -70,7 +87,7 @@
                 <h5 class="mt-0 font-weight-bold mb-2">{{hongo.nombre}}</h5>
                 <!-- <p class="font-italic text-muted mb-0 small"></p> -->
                 {%if hongo.prob >= 1%}
-                  <h6 class="font-weight-bold my-2">{{hongo.prob}}%</h6>
+                <h6 class="font-weight-bold my-2">{{hongo.prob}}%</h6>
                 {%endif%}
                 {%if hongo.prob2 >= 1 or hongo.prob3 >= 1 %}
                 <h6>También puede ser:</h6>
